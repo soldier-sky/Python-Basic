@@ -1,0 +1,125 @@
+# This file is a quick refernce for subprocess module.
+-------------------------------------------------------------------------------------
+subprocess.call()
+-------------------------------------------------------------------------------------
+This is basically just like the Popen class and takes all of the same arguments, but it simply wait until the command completes and gives us the return code.
+
+subprocess.call(args, *, stdin=None, stdout=None, stderr=None, shell=False)
+Run the command described by args. Wait for command to complete, then return the returncode attribute.
+-------------------------------------------------------------------------------------
+>>> import os
+>>> os.chdir('/')
+>>> import subprocess
+>>> subprocess.call(['ls','-l'])
+total 181
+drwxr-xr-x    2 root root  4096 Mar  3  2012 bin
+drwxr-xr-x    4 root root  1024 Oct 26  2012 boot
+..
+The command line arguments are passed as a list of strings, which avoids the need for escaping quotes or other special characters that might be interpreted by the shell.
+
+>>> import subprocess
+>>> subprocess.call('echo $HOME')
+Traceback (most recent call last):
+...
+OSError: [Errno 2] No such file or directory
+>>>
+>>> subprocess.call('echo $HOME', shell=True)
+/user/khong
+0
+Setting the shell argument to a true value causes subprocess to spawn an intermediate shell process, and tell it to run the command. In other words, using an intermediate shell means that variables, glob patterns, and other special shell features in the command string are processed before the command is run. Here, in the example, $HOME was processed before the echo command. Actually, this is the case of command with shell expansion while the command ls -l considered as a simple command.
+
+-------------------------------------------------------------------------------------
+subprocess.check_call()
+------------------------------------------------------------------------------------
+
+subprocess.check_call(args, *, stdin=None, stdout=None, stderr=None, shell=False)
+The check_call() function works like call() except that the exit code is checked, and if it indicates an error happened then a CalledProcessError exception is raised.
+
+>>> import subprocess
+>>> subprocess.check_call(['false'])
+Traceback (most recent call last):
+...
+subprocess.CalledProcessError: Command '['false']' returned non-zero exit status 1
+
+
+
+------------------------------------------------------------------------------------
+subprocess.check_output()
+------------------------------------------------------------------------------------
+subprocess.check_output(args, *, stdin=None, stderr=None, 
+                                 shell=False, universal_newlines=False)
+The standard input and output channels for the process started by call() are bound to the parent's input and output. That means the calling program cannot capture the output of the command. To capture the output, we can use check_output() for later processing.
+
+>>> import subprocess
+>>> output = subprocess.check_output(['ls','-l'])
+>>> print output
+total 181
+drwxr-xr-x    2 root root  4096 Mar  3  2012 bin
+drwxr-xr-x    4 root root  1024 Oct 26  2012 boot
+...
+>>> output = subprocess.check_output(['echo','$HOME'], shell=True)
+>>> print output
+/user/khong
+
+
+
+
+------------------------------------------------------------------------------------
+subprocess.Popen()
+------------------------------------------------------------------------------------
+The underlying process creation and management in this module is handled by the Popen class. It offers a lot of flexibility so that developers are able to handle the less common cases not covered by the convenience functions.
+
+subprocess.Popen() executes a child program in a new process. On Unix, the class uses os.execvp()-like behavior to execute the child program. On Windows, the class uses the Windows CreateProcess() function.
+
+
+args of subprocess.Popen()
+class subprocess.Popen(args, bufsize=0, executable=None, 
+                       stdin=None, stdout=None, stderr=None, 
+                       preexec_fn=None, close_fds=False, 
+                       shell=False, cwd=None, env=None, universal_newlines=False, 
+                       startupinfo=None, creationflags=0)
+
+
+subprocess.Popen() - stdout and stderr
+>>> import subprocess
+>>> proc = subprocess.Popen(['echo', '"Hello world!"'], 
+...                          stdout=subprocess.PIPE)
+>>> stddata = proc.communicate()
+>>> stddata
+('"Hello world!"\n', None)
+Note that the communicate() method returns a tuple (stdoutdata, stderrdata) : ('"Hello world!"\n' ,None). If we don't include stdout=subprocess.PIPE or stderr=subprocess.PIPE in the Popen call, we'll just get None back.
+
+Popen.communicate(input=None)
+Popen.communicate() interacts with process: Send data to stdin. Read data from stdout and stderr, until end-of-file is reached. Wait for process to terminate. The optional input argument should be a string to be sent to the child process, or None, if no data should be sent to the child.
+So, actually, we could have done as below:
+
+>>> import subprocess
+>>> proc = subprocess.Popen(['echo', '"Hello world!"'],
+...                          stdout=subprocess.PIPE)
+>>> (stdoutdata, stderrdata) = proc.communicate()
+>>> stdoutdata
+'"Hello world!"\n'
+or we can explicitly specify which one we want from proc.communicate():
+
+>>> import subprocess
+>>> proc = subprocess.Popen(['echo', '"Hello world!"'],
+...                          stdout=subprocess.PIPE)
+>>> stdoutdata = proc.communicate()[0]
+>>> stdoutdata
+'"Hello world!"\n'
+The simplest code for the example above might be sending the stream directly to console:
+
+>>> import subprocess
+>>> proc = subprocess.Popen(['echo', '"Hello world!"'],
+...                          stdout=subprocess.PIPE)
+>>> proc.communicate()[0]
+'"Hello world!"\n'
+
+
+
+
+
+
+
+
+
