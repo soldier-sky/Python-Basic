@@ -26,11 +26,11 @@ def my_decorator(func):
     decorator function will call the function on which its being applied and 
     additional routines mentioned in wrapper function will execute.
     """
-    def wraper_function():
+    def wrapper_function():
         print("----- Start of decorator ---------")
         func()
         print("----- End of decorator ---------")
-    return wraper_function
+    return wrapper_function
 
 
 @my_decorator
@@ -42,11 +42,11 @@ greeting()
 # To avoid this we can use updated decorator definition.
 
 def my_new_decorator(func):
-    def wraper_function(*args, **kwargs):
+    def wrapper_function(*args, **kwargs):
         print("----- Start of decorator ---------")
         func(*args, **kwargs)
         print("----- End of decorator ---------")
-    return wraper_function
+    return wrapper_function
 
 @my_new_decorator
 def custom_greeting(name):
