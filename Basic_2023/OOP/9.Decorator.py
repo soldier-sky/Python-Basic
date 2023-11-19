@@ -8,7 +8,7 @@ Something similar to Higher order function.
 def greet(func):
     func()
 
-def new_greed():
+def new_greet():
     def func():
         return 5
     return func

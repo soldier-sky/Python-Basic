@@ -3,7 +3,7 @@ Example programm to understand how to create own iterator,
 with next functionality similar to inbuilt types like List etc.
 """
 
-
+import pdb
 class MyGenerator:
     """ Example generator 
     """
@@ -18,6 +18,7 @@ class MyGenerator:
     
     # Overload next()
     def __next__(self):
+        #pdb.set_trace()          # similar to gdb debugger, pdb is used in to debug the python code
         if MyGenerator.current < self.last:
             num = MyGenerator.current
             MyGenerator.current += 1

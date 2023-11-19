@@ -4,8 +4,8 @@
 # Creating a Base class
 class Base:
     def __init__(self):
-        self.a = "GeeksforGeeks"
-        self.__c = "GeeksforGeeks"                  #private member
+        self.a = "BaseClassA"
+        self.__c = "BaseClassC"                     #private member
         self._p=10									#protected member p
     def print_private(self):
         print(f"value of private c: {self.__c}")

@@ -18,7 +18,7 @@ except EOFError:
     print('Why did you do an EOF on me?')
 except ShortInputException as ex:
     print(('ShortInputException: the input was ' + 
-            ' {0} long, excepted at least {1}').format(ex.length, ex.atleast))
+            ' {0} short, excepted at least {1}').format(ex.length, ex.atleast))
 
 
 else:

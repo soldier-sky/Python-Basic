@@ -1,6 +1,6 @@
 Basic data types:
 #----------------------------------
- strings are made immutable so that programmers cannot alter the contents of the object (even by mistake). This avoids unnecessary bugs. Some other immutable objects are integer, float, tuple, and bool.
+# strings are made immutable so that programmers cannot alter the contents of the object (even by mistake). This avoids unnecessary bugs. Some other immutable objects are integer, float, tuple, and bool.
 #---------------------------------------
 >>set 
 myset = {"apple", "banana", "cherry"}
