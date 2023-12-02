@@ -1,0 +1,2 @@
+Usually websites list what can be scraped using /robot.txt landing page. E.g. udemy
+https://www.udemy.com/robots.txt
