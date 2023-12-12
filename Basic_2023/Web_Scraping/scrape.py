@@ -1,3 +1,6 @@
+''' Example program to scrape data from YC hacker news. 
+In this example data i.e. text and link to article if score/upvotes are >100'''
+
 import requests
 from bs4 import BeautifulSoup
 import pprint

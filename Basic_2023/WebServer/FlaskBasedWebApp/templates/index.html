@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> My First HTML Website</title>
+    <link rel='stylesheet' type="text/css" href="static/style.css"> <!--This is a comment. To refernce css use this link tag-->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='pythonFolder.ico') }}">    <!-- This is a comment. double curly braces refers to evaluating the expression for Flask and its called jinja-->>
+    <body>
+        I'm A Web Developer!
+        <script src='static/script.js'> </script>  <!--This is a comment. To execute script, usally placed at the end of the body using script tag-->
+    </body>
+</head>
+</html>
